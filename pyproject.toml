@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kvpass"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+  "azure-identity>=1.16.0",
+  "azure-keyvault-secrets>=4.8.0",
+  "typer>=0.12.0",
+  "rich>=13.7.0",
+  "pyperclip>=1.8.2",
+]
+
+[project.scripts]
+kvpass = "kvpass.cli:app"
+kv-firewall-checker = "kvpass.firewall:main"
+
+[tool.setuptools.packages.find]
+include = ["kvpass*"]
+

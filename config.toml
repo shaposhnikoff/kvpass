@@ -1,0 +1,18 @@
+[vault1]
+default = true
+url = "https://YOURVAULTNAME.vault.azure.net/"
+prefix = "kvp-" 
+clipboard_ttl_seconds = 25
+default_copy = true
+
+[vault2]
+url = "https://prod-keyvault.vault.azure.net"
+prefix = ""          
+clipboard_ttl_seconds = 25
+default_copy = true
+
+[vault3]
+url = "https://dev-base-keyvaulti.vault.azure.net/"
+prefix = "" 
+clipboard_ttl_seconds = 25
+default_copy = true
