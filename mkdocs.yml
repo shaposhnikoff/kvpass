@@ -1,0 +1,17 @@
+site_name: kvpass
+site_description: Azure Key Vault password manager CLI
+repo_url: https://github.com/shaposhnikoff/kvpass
+repo_name: kvpass
+theme:
+  name: material
+
+docs_dir: docs
+
+nav:
+  - Home: README.md
+  - Installation: installation.md
+  - Configuration: configuration.md
+  - Usage: usage.md
+  - Commands: commands.md
+  - Shell Completion: shell-completion.md
+  
