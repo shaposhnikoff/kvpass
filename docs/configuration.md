@@ -67,13 +67,13 @@ kvpass vaults
 
 Output:
 ```
-┏━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━┓
-┃ Name        ┃ URL                                     ┃ Prefix   ┃ Default ┃
-┡━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━┩
-│ development │ https://dev-vault.vault.azure.net/      │ kvp-dev- │         │
-│ production  │ https://prod-vault.vault.azure.net/     │ kvp-     │ ✓       │
-│ staging     │ https://staging-vault.vault.azure.net/  │ (none)   │         │
-└─────────────┴─────────────────────────────────────────┴──────────┴─────────┘
+┏━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━┓
+┃ Name        ┃ URL                                     ┃ Subscription  ┃ Prefix   ┃ Default ┃
+┡━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━┩
+│ development │ https://dev-vault.vault.azure.net/      │ (current)     │ kvp-dev- │         │
+│ production  │ https://prod-vault.vault.azure.net/     │ my-sub        │ kvp-     │ ✓       │
+│ staging     │ https://staging-vault.vault.azure.net/  │ (current)     │ (none)   │         │
+└─────────────┴─────────────────────────────────────────┴───────────────┴──────────┴─────────┘
 ```
 
 ## Configuration Options
@@ -95,6 +95,22 @@ Mark this vault as the default. Only one vault should have `default = true`.
 ```toml
 default = true
 ```
+
+### `subscription` (optional)
+
+Default: `null` (uses the currently active Azure subscription)
+
+The Azure subscription ID or name that contains the Key Vault. Useful when working with vaults across multiple subscriptions.
+
+```toml
+# Use subscription by name
+subscription = "My Production Subscription"
+
+# Or by ID
+subscription = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+```
+
+If not set, the currently active subscription (as set by `az account set`) is used.
 
 ### `prefix` (optional)
 
@@ -164,6 +180,7 @@ prefix = "kvp-"
 [prod]
 default = true
 url = "https://prod-secrets.vault.azure.net/"
+subscription = "Production Subscription"
 prefix = "kvp-"
 clipboard_ttl_seconds = 10
 default_copy = true
@@ -176,6 +193,7 @@ default_copy = true
 
 [shared]
 url = "https://shared-vault.vault.azure.net/"
+subscription = "Shared Services"
 prefix = ""
 ```
 

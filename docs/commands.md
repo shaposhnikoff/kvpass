@@ -28,6 +28,34 @@ If not specified, kvpass uses:
 
 ---
 
+## `config` — Edit Configuration
+
+Open the configuration file in your text editor.
+
+```bash
+kvpass config
+```
+
+If the config file does not exist, a template is created automatically before the editor opens.
+
+### Environment
+
+Uses `$EDITOR` or `$VISUAL` environment variable.
+
+```bash
+export EDITOR=nano
+export EDITOR=vim
+export EDITOR="code --wait"
+```
+
+### Examples
+
+```bash
+kvpass config
+```
+
+---
+
 ## `vaults` — List Configured Vaults
 
 List all vaults from your configuration file.
@@ -39,13 +67,13 @@ kvpass vaults
 ### Output
 
 ```
-┏━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━┓
-┃ Name        ┃ URL                                     ┃ Prefix   ┃ Default ┃
-┡━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━┩
-│ development │ https://dev-vault.vault.azure.net/      │ kvp-dev- │         │
-│ production  │ https://prod-vault.vault.azure.net/     │ kvp-     │ ✓       │
-│ staging     │ https://staging-vault.vault.azure.net/  │ (none)   │         │
-└─────────────┴─────────────────────────────────────────┴──────────┴─────────┘
+┏━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━┓
+┃ Name        ┃ URL                                     ┃ Subscription  ┃ Prefix   ┃ Default ┃
+┡━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━┩
+│ development │ https://dev-vault.vault.azure.net/      │ (current)     │ kvp-dev- │         │
+│ production  │ https://prod-vault.vault.azure.net/     │ my-sub        │ kvp-     │ ✓       │
+│ staging     │ https://staging-vault.vault.azure.net/  │ (current)     │ (none)   │         │
+└─────────────┴─────────────────────────────────────────┴───────────────┴──────────┴─────────┘
 
 Use --vault <name> to select a specific vault
 ```
@@ -455,6 +483,53 @@ kvpass untag prod/db/password team
 
 # Remove multiple tags
 kvpass untag prod/db/password team owner
+```
+
+---
+
+## `firewall` — Check Firewall Access
+
+Check whether your current public IP is allowed by the Key Vault firewall.
+
+```bash
+kvpass firewall [VAULT_NAME] [OPTIONS]
+```
+
+### Arguments
+
+| Argument | Description |
+|----------|-------------|
+| `VAULT_NAME` | Optional. Key Vault name to check (uses current/default vault if omitted) |
+
+### Options
+
+| Option | Short | Description |
+|--------|-------|-------------|
+| `--all` | `-a` | Check all vaults from config |
+| `--ip TEXT` | | Check a specific IP instead of your current public IP |
+| `--subscription TEXT` | `-s` | Azure subscription ID or name |
+
+### Examples
+
+```bash
+# Check current (default) vault
+kvpass firewall
+
+# Check a specific vault by name
+kvpass firewall myvault
+
+# Check with explicit subscription
+kvpass firewall myvault --subscription "My Subscription"
+kvpass firewall myvault -s "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+
+# Check all vaults defined in config
+kvpass firewall --all
+
+# Check using a vault selected via --vault flag
+kvpass --vault prod firewall
+
+# Check a specific IP address (instead of your current public IP)
+kvpass firewall --ip 1.2.3.4
 ```
 
 ---

@@ -13,7 +13,7 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/kvpass.git
+git clone https://github.com/shaposhnikoff/kvpass.git
 cd kvpass
 
 # Ensure Python 3.11+ is used
@@ -30,7 +30,7 @@ uv run kvpass --help
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/kvpass.git
+git clone https://github.com/shaposhnikoff/kvpass.git
 cd kvpass
 
 # Create virtual environment

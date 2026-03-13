@@ -20,6 +20,8 @@ Think of it as [pass](https://www.passwordstore.org/) (the Unix password manager
 - [Configuration](configuration.md)
 - [Usage](usage.md)
 - [Commands Reference](commands.md)
+- [Firewall](firewall.md)
+- [Shell Completion](shell-completion.md)
 
 ## Quick Start
 

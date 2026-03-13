@@ -13,5 +13,6 @@ nav:
   - Configuration: configuration.md
   - Usage: usage.md
   - Commands: commands.md
+  - Firewall: firewall.md
   - Shell Completion: shell-completion.md
   

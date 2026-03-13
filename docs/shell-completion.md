@@ -31,62 +31,12 @@ kvpass --install-completion fish
 
 This adds a line to your shell config file. Restart your shell or source the file.
 
-### Option 2: Custom Completions (Recommended)
-
-The custom completions in the `completions/` directory provide enhanced features like dynamic path completion.
-
-#### Bash
-
-```bash
-# Option A: Add to ~/.bashrc
-echo 'source /path/to/kvpass/completions/kvpass.bash' >> ~/.bashrc
-
-# Option B: Copy to bash-completion directory (if installed)
-sudo cp /path/to/kvpass/completions/kvpass.bash /etc/bash_completion.d/kvpass
-# or for user-only:
-mkdir -p ~/.local/share/bash-completion/completions
-cp /path/to/kvpass/completions/kvpass.bash ~/.local/share/bash-completion/completions/kvpass
-
-# Reload
-source ~/.bashrc
-```
-
-#### Zsh
-
-```bash
-# Option A: Add completions directory to fpath
-# Add to ~/.zshrc:
-fpath=(/path/to/kvpass/completions $fpath)
-autoload -Uz compinit && compinit
-
-# Option B: Copy to zsh completions directory
-mkdir -p ~/.zsh/completions
-cp /path/to/kvpass/completions/kvpass.zsh ~/.zsh/completions/_kvpass
-# Then add to ~/.zshrc:
-fpath=(~/.zsh/completions $fpath)
-autoload -Uz compinit && compinit
-
-# Reload
-source ~/.zshrc
-```
-
-#### Fish
-
-```bash
-# Copy to fish completions directory
-mkdir -p ~/.config/fish/completions
-cp /path/to/kvpass/completions/kvpass.fish ~/.config/fish/completions/kvpass.fish
-
-# Reload (or restart fish)
-source ~/.config/fish/completions/kvpass.fish
-```
-
 ## Usage Examples
 
 ```bash
 # Complete commands
 kvpass <TAB>
-# → vaults  ls  search  get  set  edit  versions  rm  tags  tag  untag
+# → config  vaults  ls  search  get  set  edit  versions  rm  tags  tag  untag  firewall
 
 # Complete vault names
 kvpass --vault <TAB>
