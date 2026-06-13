@@ -80,6 +80,29 @@ Use --vault <name> to select a specific vault
 
 ---
 
+## `tui` — Interactive Secret Selector
+
+Open a fullscreen keyboard-first selector for secrets in the selected vault.
+
+```bash
+kvpass tui
+kvpass --vault production tui
+```
+
+### Behavior
+
+- Type immediately to filter secrets live.
+- Filters match decoded path, raw Key Vault secret name, tag keys, and tag values.
+- Matching fragments are highlighted in the table.
+- Use `Up` / `Down` to move the selected row.
+- Press `Enter` or `Ctrl+Y` to copy the selected secret value to the clipboard with the configured TTL.
+- Press `Ctrl+E` to edit the selected secret in `$EDITOR` / `$VISUAL`.
+- Press `Esc` or `Ctrl+C` to quit.
+
+The TUI does not display secret values in the table. Values are fetched only when copying or editing the selected secret.
+
+---
+
 ## `ls` — List Secrets
 
 List all secrets managed by kvpass.
@@ -552,4 +575,3 @@ kvpass firewall --ip 1.2.3.4
 | `AZURE_TENANT_ID` | Azure tenant ID (for service principal auth) |
 | `AZURE_CLIENT_ID` | Azure client ID (for service principal auth) |
 | `AZURE_CLIENT_SECRET` | Azure client secret (for service principal auth) |
-

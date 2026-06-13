@@ -78,6 +78,17 @@ def _ctx():
 
 
 @app.command()
+def tui():
+    """
+    Open the interactive fullscreen secret selector.
+    """
+    s, kv = _ctx()
+    from .tui import run_secret_selector
+
+    run_secret_selector(s, kv)
+
+
+@app.command()
 def config():
     """
     Open configuration file in editor.
