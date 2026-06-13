@@ -154,8 +154,16 @@ class SecretSelectorApp(App[TuiResult | None]):
     }
 
     #secrets {
-        height: 1fr;
+        height: 2fr;
+        min-height: 5;
         background: #11131c;
+    }
+
+    #details {
+        height: 8;
+        padding: 0 1;
+        background: #151824;
+        color: #d7dce8;
     }
 
     #status {
@@ -217,6 +225,7 @@ class SecretSelectorApp(App[TuiResult | None]):
             yield Static(">", id="prompt")
             yield Input(value=self.query_text, id="filter")
         yield DataTable(id="secrets")
+        yield Static(id="details")
         yield Static(id="status")
         yield Static(
             "Enter copy  Ctrl+A add  Ctrl+E edit  Ctrl+D delete  "
@@ -228,7 +237,7 @@ class SecretSelectorApp(App[TuiResult | None]):
         table = self.query_one("#secrets", DataTable)
         table.cursor_type = "row"
         table.zebra_stripes = False
-        table.add_columns("", "path", "raw_name", "tags")
+        table.add_columns("", "name")
 
         self._apply_filter()
         self.query_one("#filter", Input).focus()
@@ -275,13 +284,29 @@ class SecretSelectorApp(App[TuiResult | None]):
             table.add_row(
                 Text(">" if selected else " ", style="bold #82aaff" if selected else ""),
                 _styled_cell(row.path, match.spans.get("path", []), selected),
-                _styled_cell(row.raw_name, match.spans.get("raw_name", []), selected),
-                _styled_cell(format_tags_for_display(row.tags), match.spans.get("tags", []), selected),
                 key=row.raw_name,
             )
 
         if self.selected_index >= 0:
             table.move_cursor(row=self.selected_index, column=0, animate=False)
+        self._update_details()
+
+    def _update_details(self) -> None:
+        selected = self.selected
+        if selected is None:
+            self.query_one("#details", Static).update("No secret selected")
+            return
+
+        row = selected.row
+        tags = format_tags_for_display(row.tags) or "(none)"
+        details = Text()
+        details.append(f"Path: {row.path}\n", style="bold #c8d3f5")
+        details.append(f"Raw name: {row.raw_name}\n")
+        details.append(f"Vault: {self.vault_name}\n")
+        details.append(f"Tags: {tags}\n")
+        details.append(f"Clipboard TTL: {self.clipboard_ttl_seconds}s\n")
+        details.append("Actions: Enter/Ctrl+Y copy, Ctrl+E edit, Esc quit", style="#7f849c")
+        self.query_one("#details", Static).update(details)
 
     def _set_status(self, message: str, *, temporary: bool = False) -> None:
         self.status_text = message

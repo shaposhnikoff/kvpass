@@ -7,8 +7,9 @@ flowchart TD
     LoadSecrets --> OpenTui[Open fullscreen TUI]
     OpenTui --> Filter[User types filter]
     Filter --> Match[Match path raw name and tags]
-    Match --> Update[Update count table highlights and selection]
-    Update --> Wait[Wait for key action]
+    Match --> Update[Update count list highlights and selection]
+    Update --> Details[Render selected secret metadata]
+    Details --> Wait[Wait for key action]
     Wait --> Filter
     Wait --> Move[Up or Down changes selected row]
     Move --> Update

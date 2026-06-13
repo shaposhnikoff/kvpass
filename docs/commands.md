@@ -93,13 +93,15 @@ kvpass --vault production tui
 
 - Type immediately to filter secrets live.
 - Filters match decoded path, raw Key Vault secret name, tag keys, and tag values.
-- Matching fragments are highlighted in the table.
+- The upper pane is a scrollable list that shows only the decoded secret path/name.
+- The lower pane shows metadata for the selected secret: path, raw Key Vault name, vault, tags, and clipboard TTL.
+- Matching fragments are highlighted in the upper list when they match the displayed name.
 - Use `Up` / `Down` to move the selected row.
 - Press `Enter` or `Ctrl+Y` to copy the selected secret value to the clipboard with the configured TTL.
 - Press `Ctrl+E` to edit the selected secret in `$EDITOR` / `$VISUAL`.
 - Press `Esc` or `Ctrl+C` to quit.
 
-The TUI does not display secret values in the table. Values are fetched only when copying or editing the selected secret.
+The TUI does not display secret values. Values are fetched only when copying or editing the selected secret.
 
 ---
 
