@@ -75,3 +75,15 @@ def test_secret_selector_uses_name_list_and_metadata_details_panel() -> None:
             assert "Tags: env=dev" in rendered_details
 
     asyncio.run(run_app())
+
+
+def test_secret_selector_visually_separates_list_and_details() -> None:
+    css = SecretSelectorApp.CSS
+
+    assert "#secrets" in css
+    assert "background: #f8f8f2;" in css
+    assert "color: #11131c;" in css
+    assert "#details" in css
+    assert "background: #5f6368;" in css
+    assert "padding: 1 1 0 1;" in css
+    assert "#divider" in css

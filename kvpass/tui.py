@@ -111,7 +111,7 @@ def build_secret_rows(secrets: Iterable[SecretInfo], prefix: str) -> list[Secret
 
 
 def _styled_cell(value: str, spans: list[tuple[int, int]], selected: bool) -> Text:
-    base_style = "bold white on #263347" if selected else ""
+    base_style = "bold white on #2563eb" if selected else "#11131c on #f8f8f2"
     text = Text(value, style=base_style)
     for start, end in spans:
         text.stylize("bold black on yellow", start, end)
@@ -156,14 +156,21 @@ class SecretSelectorApp(App[TuiResult | None]):
     #secrets {
         height: 2fr;
         min-height: 5;
-        background: #11131c;
+        background: #f8f8f2;
+        color: #11131c;
+    }
+
+    #divider {
+        height: 1;
+        background: #2b2f3a;
+        color: #9aa0aa;
     }
 
     #details {
         height: 8;
-        padding: 0 1;
-        background: #151824;
-        color: #d7dce8;
+        padding: 1 1 0 1;
+        background: #5f6368;
+        color: #f5f7fa;
     }
 
     #status {
@@ -225,6 +232,7 @@ class SecretSelectorApp(App[TuiResult | None]):
             yield Static(">", id="prompt")
             yield Input(value=self.query_text, id="filter")
         yield DataTable(id="secrets")
+        yield Static("", id="divider")
         yield Static(id="details")
         yield Static(id="status")
         yield Static(
@@ -237,6 +245,7 @@ class SecretSelectorApp(App[TuiResult | None]):
         table = self.query_one("#secrets", DataTable)
         table.cursor_type = "row"
         table.zebra_stripes = False
+        table.show_header = False
         table.add_columns("", "name")
 
         self._apply_filter()
@@ -282,7 +291,7 @@ class SecretSelectorApp(App[TuiResult | None]):
             selected = index == self.selected_index
             row = match.row
             table.add_row(
-                Text(">" if selected else " ", style="bold #82aaff" if selected else ""),
+                Text(">" if selected else " ", style="bold white on #2563eb" if selected else "#11131c on #f8f8f2"),
                 _styled_cell(row.path, match.spans.get("path", []), selected),
                 key=row.raw_name,
             )
@@ -300,12 +309,12 @@ class SecretSelectorApp(App[TuiResult | None]):
         row = selected.row
         tags = format_tags_for_display(row.tags) or "(none)"
         details = Text()
-        details.append(f"Path: {row.path}\n", style="bold #c8d3f5")
+        details.append(f"Path: {row.path}\n", style="bold white")
         details.append(f"Raw name: {row.raw_name}\n")
         details.append(f"Vault: {self.vault_name}\n")
         details.append(f"Tags: {tags}\n")
         details.append(f"Clipboard TTL: {self.clipboard_ttl_seconds}s\n")
-        details.append("Actions: Enter/Ctrl+Y copy, Ctrl+E edit, Esc quit", style="#7f849c")
+        details.append("Actions: Enter/Ctrl+Y copy, Ctrl+E edit, Esc quit", style="#e0e0e0")
         self.query_one("#details", Static).update(details)
 
     def _set_status(self, message: str, *, temporary: bool = False) -> None:
